@@ -1,6 +1,3 @@
-# Introduction
-This is a school project submitted by Krishna Vohra, student of Class 12th
-
 # Flight Booking System
 
 Welcome to the Flight Booking System! This is a Python project that allows users to book flights and manage flight reservations. It integrates with MySQL for data storage and retrieval.
