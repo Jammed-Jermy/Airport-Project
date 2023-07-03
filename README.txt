@@ -53,4 +53,4 @@ As a student of the 12th grade at Mira Model School, I have developed this Pytho
 
 Best regards,
 Krishna
-12th - A, Mira Model School
+12th
