@@ -1,4 +1,4 @@
-#ProjectKrishna
+#ProjectFlight
 
 
 #ROOT_PW IS REMOVED,TICKETS IS HASTAGGED, REDIRECTION=FALSE
@@ -56,7 +56,7 @@ def guided():
 import mysql.connector as ms
 import pandas as pd
 try: 
-    con = ms.connect(host="localhost", user="root", password="hello123", database="airport")
+    con = ms.connect(host="localhost", user="root", password="ur_pw", database="airport")
 except Exception as e:
     ask4=input("Do you have MYSQL installed?: ")
     if ask4.upper()=="YES" or ask4.upper()=="Y":
@@ -156,7 +156,7 @@ def menu_2 ():                 #working properly (test 4 conductedd)
     print("\t\t---------------------------------")
 
 def introduction():
-    text = '''                 Project submitted by KRISHNA VOHRA of class 12TH 
+    text = '''                   Project submitted by KRISHNA  of class 12TH 
                                         __|__            
                                 --------(_)--------     
                                     O  O       O  O 
