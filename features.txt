@@ -1,0 +1,15 @@
+## Here are the headings for the features of the Flight Booking System code:
+
+# User
+-Flight Search and Booking
+-Flight Cancellation
+-Flight Modification
+-Payment Integration
+-Booking Confirmation
+
+
+# Admin Panel
+-Booking Management
+-Flight Management
+-Refresh Dates
+-Automated Flight Generation
