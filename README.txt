@@ -27,13 +27,12 @@ To get started with the Flight Booking System, follow these steps:
    git clone https://github.com/your-username/flight-booking-system.git
    ```
 
-2. Navigate to the project directory:
+or
 
-   ```
-   cd flight-booking-system
-   ```
+1. Download this repository
 
-3. Install the required libraries (as mentioned in the [Requirements](#requirements) section).
+
+2. Install the required libraries (as mentioned in the [Requirements](#requirements) section).
 
 
 ## Database Setup
@@ -41,6 +40,10 @@ To get started with the Flight Booking System, follow these steps:
 Before running the application, you need to set up the MySQL database. Follow these steps:
 
 1. Create a new MySQL database named "airport" for the project.
+
+## Final
+
+You can run the main code Krishna.py
 
 
 
