@@ -43,7 +43,7 @@ Before running the application, you need to set up the MySQL database. Follow th
 
 ## Final
 
-You can run the main code Krishna.py
+You can run the main code by running main.py
 
 
 
