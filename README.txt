@@ -45,7 +45,10 @@ Before running the application, you need to set up the MySQL database. Follow th
 
 ## Final
 
-You can run the main code by running main.py
+-You can run the main code by running main.py
+-To access the admin panel
+  -Menu code=12
+  -Masterpassword=321
 
 
 
