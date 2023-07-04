@@ -51,6 +51,5 @@ Before running the application, you need to set up the MySQL database. Follow th
 
 I have developed this Python application that allows users to book flights and manage flight reservations. The system seamlessly integrates with MySQL, ensuring efficient storage and retrieval of data. Additionally, I have utilized the pandas module for enhanced visual experience to the user. This project showcases my skills in Python programming, database integration, and module utilization. Thank you for considering my work, and I hope you find it to be a valuable demonstration of my knowledge and abilities.
 
-Best regards,
-Krishna
-12th
+Regards, 
+Jammed-Jermy
