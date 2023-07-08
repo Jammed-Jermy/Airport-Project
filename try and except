@@ -1,0 +1,250 @@
+import mysql.connector as ms
+con=ms.connect(host="localhost",user="root",password="",database="airport")
+cursor=con.cursor()
+import pandas as pd
+import random 
+masterpass=69
+def menu ():
+    print( "\n\n\n\n","*"*60,"Welcome to Flight Booking System", "*"*196)
+    print("\t\t---------------------------------")
+    print("\t\t| 1. Book Flight                |")
+    print("\t\t| 2. Check Existing Tickets     |")
+    print("\t\t| 3. Make changes in details    |")
+    print("\t\t| 4. Continue Payment?          |")
+    print("\t\t| 5. Exit                       |")
+    print("\t\t---------------------------------")
+
+
+
+def save_payment_details():
+    try:
+        x=0
+        passenger__id = int(input("Enter passenger ID: "))
+
+        credit_card_number = input("Enter credit card number: ")
+        price = 60
+        print("Your final Price is", price)
+        user_ver = input("Do you want to continue? (Y/N)")
+        if user_ver == "Y":
+            Cvv=("Enter your CVV")
+            insert_query = "INSERT INTO payment_info (Card, Price, Passenger) VALUES (%s, %s, %s)"
+            values = (credit_card_number, price, passenger__id)
+            cursor.execute(insert_query, values)
+            con.commit()
+            print("Payment details saved successfully!")
+            x=1
+        else:
+            print("Payment cancelled.")
+    except Exception as e:
+        print("Error occurred while saving payment details:", e)
+    return x
+
+def login():     #working properly (test 3 conducted)
+    print("Please Enter the flight id (Pid) you want to book","\n")
+    Pid=int(input("Response"))
+    Fname=input("Enter you First Name: ")
+    Lname=input("Enter your Last Name: ")
+    Phone=int(input("Enter your Phone Number"))
+    Meal=input("Are you vegetarian(Y/N)")
+    if Meal=="Y"or"y":
+        Meal="Veg"
+    else:
+        Meal="Non Veg"
+    final=[Pid,Fname,Lname,Phone,Meal]
+    finalDf=pd.DataFrame(final)
+    finalDf = finalDf.rename(index={0: 'Pid'})
+    finalDf = finalDf.rename(index={1: 'Fname'})
+    finalDf = finalDf.rename(index={2: 'Lname'})
+    finalDf = finalDf.rename(index={3: 'Phone'})
+    finalDf = finalDf.rename(index={4: 'Meal'})
+    print("\n",finalDf,"\n","This is Your Login information Do you want To change anything?(Y/N)")
+    response=input("RESPONSE: ")
+    password=password_gen()
+    password=str(password)
+    if response=="Y":
+        print("\n","Please tell us what you want to change",finalDf)
+        changes=input("Enter Row name: ")
+        if changes=="Pid":
+            Pid=int(input("Enter new Pid"))
+        elif changes=="Fname":
+            Fname=(input("Enter new Fname"))
+        elif changes=="Lname":
+            Lname=(input("Enter new Lname"))
+        elif changes=="Phone":
+            Phone=(input("Enter new Phone"))
+        print("Changes has been done")
+    Phone=str(Phone)
+    Fname="'"+Fname+"'"
+    Lname="'"+Lname+"'"
+    Phone="'"+Phone+"'"
+    Meal="'"+Meal+"'"
+    password="'"+password+"'"
+    passenger_id = get_next_passenger_id()
+    loginquery="insert into customer values({},{},{},{},{},{},{})".format(passenger_id,Fname,Lname,Phone,Meal,Pid,password)
+    cursor.execute(loginquery)
+    con.commit()
+    print("Your Data is Saved")
+    print("Your passenger id is", passenger_id)
+    print("Your password is",password)
+    print("Please Remember These")
+
+
+def password_gen():
+    out1=random.randrange(1000,8831)
+    out2=random.randrange(100,999)
+    out3=random.randrange(0,100)
+    out4=0
+    masterpass=out1+out2+out3+out4
+    return masterpass
+
+
+def seat():      #working properly (test 4 conductedd)
+    a=random.randrange(0,36)
+    a=str(a)
+    l=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    b=random.randint(0,26)
+    bethak=str(a+l[b])
+    return bethak
+
+
+def get_next_passenger_id():           #working properly (test 4 conductedd)
+    query = "SELECT MAX(Passenger) FROM customer;"
+    cursor.execute(query)
+    result = cursor.fetchone()
+    max_passenger_id = result[0]
+    exception_grp=None
+    if type(max_passenger_id)==type(exception_grp):
+        next_passenger_id=1
+    else:
+        next_passenger_id = max_passenger_id + 1
+    return next_passenger_id
+
+
+def modify():
+    print("Note-We can only update personal information, Not the Flight Information")
+    pw=input("Please enter your password")
+    pass_id=int(input("Please enter your 4 digit password: "))
+
+
+def checkings():
+    pass_id=int(input("Enter your passenger Id: "))
+    fullname=input("Enter your full name: ")
+    pw=input("Enter your password: ")
+    pid=int(input("Enter Pid"))
+    confirm=int(input("1.Extract Flight details?","\n","2.Extract Personal info","\n","3.Extract Card info","\n","4.Exit"))
+    if confirm==1:
+        lastquery2="Select * from airlines where Pid={};".format(pid)
+        cursor.execute(lastquery2)
+        resultant2=cursor.fetchone()
+        print("Your flight details are",resultant2)
+    elif confirm==2:
+        lastquery="Select * from customer where Passenger={} and Pw={};".format(pass_id,pw)
+        cursor.execute(lastquery)
+        resultant=cursor.fetchone()
+        print("Your personal details are",resultant)
+    elif confirm==3:
+        lastquery3="Select * from payment_info where Passenger={} ".format(pass_id)
+        cursor.execute(lastquery3)
+        resultant3=cursor.fetchone()
+        print("Your personal details are",resultant3)
+    else:
+        print("Reverting back, choice failed")
+
+
+menu()
+user=int(input("Your Response:"))
+if user==1:
+    l1=["Goa","Mumbai","Delhi","Pune"]
+    while True:
+        print("\t\t--------------------------")
+        print("\t\t|         CITY TABLE     |")
+        print("\t\t--------------------------")
+        print("\t\t|   Goa     |   Mumbai   |")
+        print("\t\t|-----------|------------|")
+        print("\t\t|   Pune    |   Delhi    |")
+        print("\t\t--------------------------")
+        Arrival=input("Please choose a Arrival City from Above: ")
+        Departure=input("Please choose a Departure City from Above: ")
+        if Arrival==Departure or Arrival and Departure not in l1:
+            print("\n","\n","\n","Please enter the info Correctly","\n")
+        else:
+            Arrival="'"+Arrival+"'"
+            Departure="'"+Departure+"'"
+            query="Select * from airlines where Arrival={} and Departure={}".format(Arrival,Departure)
+            cursor.execute(query)
+            data=cursor.fetchall()
+            df=pd.DataFrame(data)
+            df.columns = ['Plane Id', 'Airline', 'Arrival City','Departure City', 'Time', 'DoD', 'Ticket Price','Round Trip']
+            print("\n","\n","\n","\n","THESE ARE THE AVAILBLE FLIGHTS","\n",df)
+            user1=input("continue")
+            print("\n", "1.Choose a flight", "\n","2.Exit","\n")
+            while True:
+                user2=int(input("RESPONSE:"))
+                if user2==2:
+                    exit
+                elif user==1:
+                    login()
+                    output=input("Do you want to proceed with the payment?(yes/no)")
+                    output=output.upper()
+                    if output=="YES":
+                        if save_payment_details()==1:
+                            print("Flight booked Succesfully")
+                            print("Please remember your Seat number it will help you retrive information about the flight in the future")
+                            print("Your seat number: ", seat())
+                            print("Thankyou for choosing us")
+                        else:
+                            print("Your Info is saved, you can check back at us")
+                    elif output=="NO":
+                        print("Thank You Your information has been saved for future uses")
+                    else:
+                        print("Invalid Option")
+                else:
+                    print("Invalid option")
+elif user==2:
+        checkings()
+elif user==3:
+    modify()
+elif user==4:
+    print("This is continuation of payment")
+    print("Please make sure your details were saved previously")
+    save_payment_details()
+    print("Flight booked Succesfully")
+    print("Please remember your Seat number it will help you retrive information about the flight in the future")
+    print("Your seat number: ", seat())
+    print("Thankyou for choosing us")
+elif user==5:
+    print("EXITED")
+elif user==69:
+    masterpass_check=int(input("Enter Master Password: "))
+    if masterpass_check==masterpass:
+        print("You have reache Admin Console")
+        print("You can control the Backend MYSQL from here")
+        print("You can INSERT any querry in the BLOCKQ and the results will be shown")
+        print("The existing data is:")
+        print("\t\t--------------------------")
+        print("\t\t| Databases |   Tables   |")
+        print("\t\t--------------------------")
+        print("\t\t|   airport  |   customer |")
+        print("\t\t|-----------|------------|")
+        print("\t\t|   None    |   airlines |")
+        print("\t\t|-----------|------------|")
+        print("\t\t|   None   | payment_info|")
+        print("\t\t--------------------------")
+        while True:
+            querry=input("Enter any querry in mysql command form:")
+            try:
+                cursor.execute(querry)
+                result=cursor.fetchall()
+                df_result=pd.DataFrame(result)
+                print(df_result)
+            except Exception as e:
+                print("An Error occured",str(e) )
+
+            inp=input("Want to continue?(y/n)")
+            if inp=="y" or inp=="yes":
+                print("Continuing")
+            else:
+                print("Exiting Admin Console")
+                break
+    else:
+        print("Invalid Masterpassword. Exiting.")
