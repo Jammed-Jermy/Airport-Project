@@ -1,5 +1,5 @@
 import mysql.connector as ms
-con=ms.connect(host="localhost",user="root",password="hello123",database="airport")
+con=ms.connect(host="localhost",user="root",password="",database="airport")
 cursor=con.cursor()
 import pandas as pd
 import random 
