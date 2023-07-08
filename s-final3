@@ -8,7 +8,7 @@ import math
 import ctypes
 import webbrowser
 try:
-    con = ms.connect(host="localhost", user="root", password="hello123", database="airport")
+    con = ms.connect(host="localhost", user="root", password="", database="airport")
 except ms.Error as err:
     print("An error occurred while connecting to the MySQL server:", err)
 cursor=con.cursor()
