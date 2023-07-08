@@ -1,0 +1,93 @@
+import mysql.connector as ms
+con=ms.connect(host="localhost",user="root",password="hello123",database="airport")
+cursor=con.cursor()
+import pandas as pd
+import random 
+
+def menu ():
+    print("Welcome to Flight Booking System")
+    print("PLEASES CHOOSE ONE FROM THE BELO (IN NUMERIC) \n1.BOOK A FLIGHT \n2.CHECK FOR EXISTING TICKETS \n3.EXIT\n")
+menu()
+def save_payment_details():
+    try:
+        passenger_id = int(input("Enter passenger ID: "))
+        credit_card_number = input("Enter credit card number: ")
+        price=0
+        user_ver=input("Your final Price is",price,"Do you want to continue?(Y/N)")
+        if user_ver=="Y": 
+             insert_query = "INSERT INTO table_name (Card, Price, Passenger) VALUES (%s, %s, %s)"
+             values = (credit_card_number, price, passenger_id)
+             cursor.execute(insert_query, values)
+             con.commit()
+        else:
+            exit
+        print("Payment details saved successfully!")
+    except Exception as e:
+        print("Error occurred while saving payment details:", e)
+
+def login():
+    print("Please Enter the flight id (Pid) you want to book","\n")
+    Pid=int(input("Response"))
+    Fname=input("Enter you First Name: ")
+    Lname=input("Enter your Last Name: ")
+    Phone=int(input("Enter your Phone Number"))
+    Meal=input("Are you vegetarian(Y/N)")
+    if Meal=="Y"or"y":
+        Meal="Veg"
+    else:
+        Meal="Non Veg"
+    password="14"
+    Phone=str(Phone)
+    Fname="'"+Fname+"'"
+    Lname="'"+Lname+"'"
+    Phone="'"+Phone+"'"
+    Meal="'"+Meal+"'"
+    password="'"+password+"'"
+    loginquery="insert into customer values({},{},{},{},{},{},{})".format(12,Fname,Lname,Phone,Meal,Pid,password)
+    cursor.execute(loginquery)
+    con.commit
+    
+
+def seat():
+    l=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    b=random.randint(0,26)
+    bethak=str(l[b])
+    print(bethak)
+
+ 
+user=int(input("Response"))
+if user==1:
+    l1=["Goa","Mumbai","Delhi","Pune"]
+    while True:
+        print("CITY TABLE","\n","Goa","Mumbai","\n","Pune","Delhi","\n")
+        Arrival=input("Please choose a Arrival City from Above: ")
+        Departure=input("Please choose a Departure City from Above: ")
+        Arrival="'"+Arrival+"'"
+        Departure="'"+Departure+"'"
+        query="Select * from airlines where Arrival={} and Departure={}".format(Arrival,Departure)
+        cursor.execute(query)
+        data=cursor.fetchall()
+        df=pd.DataFrame(data)
+        df.columns = ['Plane Id', 'Airline', 'Arrival City','Departure City', 'Time', 'DoD', 'Ticket Price','Round Trip']
+        print("\n","\n","\n","\n","THESE ARE THE AVAILBLE FLIGHTS","\n",df)
+        user1=input("continue")
+        print("\n", "1.Choose a flight", "\n","2.Exit","\n")
+        while True:
+            user2=int(input("RESPONSE:"))
+            if user2==2:
+                exit
+            elif user==1:
+                login()
+                output=input("Do you want to proceed with the payment?")
+                output=output.upper()
+                if output=="YES":
+                    save_payment_details()
+                    print("Flight booked Succesfully")
+                    print("Please remember your Seat number it will help you retrive information about the flight in the future")
+                    print("Your seat number: ", seat())
+                    print("Thankyou for choosing us")
+                elif output=="NO":
+                    print("Thank You Your information has been saved for future uses")
+                    exit
+            else:
+                print("Invalid option")
