@@ -1,6 +1,0 @@
-#Requirments
-Before running the code the code assumes the user already has the following- 
--Python3.0
--Mysql
--Pandas Mondule in python
--Mysql table named 'airport'
